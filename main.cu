@@ -163,8 +163,7 @@ int main(int argc, char **argv)
 
     dim3 dimBlock(THREAD_PER_BLOCK, THREAD_PER_BLOCK);
     dim3 dimGrid((n / dimBlock.x) + (n % dimBlock.x != 0), (m / dimBlock.y) + (m % dimBlock.y != 0));
-    // cout << "dimGrid=" << k << "/" << dimBlock.x << endl;
-    // cout << (k / dimBlock.x) + (k % dimBlock.x != 0) << "," << (m / dimBlock.y) + (m % dimBlock.y != 0) << endl;
+
     // Start timer_kernel
     timer_kernel.start();
 
