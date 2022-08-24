@@ -3,15 +3,11 @@
 #include <stdlib.h>
 #include <cublas_v2.h>
 
-// #include <vector>
-// #include "./common_function.hpp"
-
 using namespace std;
 
 #define BLOCK_NUM 128
 #define THREAD_PER_BLOCK 32
 #define dtype double // Set calculation Accuracy to double
-// #define info 1
 
 struct my_timer
 {
@@ -72,55 +68,7 @@ bool verify(const dtype *A, const dtype *B, dtype *C, int m, int k, int n)
 {
     dtype *cpu_matC = (dtype *)malloc(m * n * sizeof(dtype));
     memset(cpu_matC, 0, m * n);
-    // for (int i = 0; i < m; ++i)
-    // {
-    //     for (int j = 0; j < k; ++j)
-    //     {
-    //         for (int q = 0; q < n; ++q)
-    //         {
-    //             cpu_matC[i * n + q] += A[i * k + j] * B[j * n + q];
-    //         }
-    //     }
-    // }
     gemm_cublas(A, B, cpu_matC, m, k, n);
-#ifdef info
-    cout << "matA:" << endl;
-    for (int i = 0; i < m; ++i)
-    {
-        for (int j = 0; j < n; ++j)
-        {
-            cout << A[i * n + j] << " ";
-        }
-        cout << endl;
-    }
-    cout << "matB:" << endl;
-    for (int i = 0; i < n; ++i)
-    {
-        for (int j = 0; j < k; ++j)
-        {
-            cout << B[i * k + j] << " ";
-        }
-        cout << endl;
-    }
-    cout << "matC:" << endl;
-    for (int i = 0; i < m; ++i)
-    {
-        for (int j = 0; j < k; ++j)
-        {
-            cout << C[i * k + j] << " ";
-        }
-        cout << endl;
-    }
-    cout << "cpu_matC:" << endl;
-    for (int i = 0; i < m; ++i)
-    {
-        for (int j = 0; j < k; ++j)
-        {
-            cout << cpu_matC[i * k + j] << " ";
-        }
-        cout << endl;
-    }
-#endif
     bool equal = true;
     for (int i = 0; i < m * n; ++i)
     {
